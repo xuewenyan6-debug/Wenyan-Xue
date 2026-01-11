@@ -22,113 +22,57 @@ The project implements a Distributed Differential Game (DDG) framework for optim
 ## 💻 Code Description
 This project’s foundational architecture is partially based on implementations from the open-source community. To protect the core intellectual property of our commercial partners, the code snippets shown here are selected from publicly available GitHub repositories (used with proper authorization) and are intended solely for demonstrating the technical approach.
 
-.
-├── /DDG_Algorithm/               # Core DDG Algorithm Implementation
-│   ├── DDG_Solver.m              # Main DDG solver (implements the proposed framework)
-│   ├── UAV_Dynamics.m            # Quadrotor dynamic model (Equations 1-5)
-│   ├── Cost_Function.m           # Individual UAV cost function (Equation 9)
-│   ├── Pontryagin_Solver.m       # Solver using Pontryagin's Minimum Principle (Eq. 20-21)
-│   └── Gradient_Optimization.m   # Distributed gradient optimization (Algorithm 1)
-│
-├── /Benchmark_Methods/           # Baseline Methods for Comparison
-│   ├── GA_DZ/                    # Genetic Algorithm with Dynamic Zoning [6]
-│   │   ├── GA_Main.m
-│   │   └── fitness_function.m
-│   └── NN_DRL/                   # Neural Network Deep Reinforcement Learning [9]
-│       ├── train_DQN.py
-│       ├── evaluate_policy.py
-│       └── model_weights.h5
-│
-├── /Simulation_Data/             # Minimal Dataset for Reproducibility
-│   ├── Scenario_1_3UAV_28Turbines/   # Scenario 1: 3 UAVs, 28 Turbines
-│   │   ├── turbine_locations.csv     # Wind turbine coordinates (X, Y)
-│   │   ├── initial_conditions.mat    # UAV initial states (position, velocity)
-│   │   ├── assigned_tasks.json       # Pre-assigned inspection tasks per UAV
-│   │   └── DDG_Results.mat           # Full DDG output (trajectories, errors, etc.)
-│   │
-│   ├── Scenario_2_6UAV_40Turbines/   # Scenario 2: 6 UAVs, 40 Turbines
-│   │   ├── ... (similar structure)
-│   │
-│   └── Benchmark_Results/        # Pre-computed results from baseline methods
-│       ├── GA_DZ_Results_Scenario1.mat
-│       └── NN_DRL_Results_Scenario1.mat
-│
-├── /Scripts_Generate_Figures/    # Scripts to Reproduce All Paper Figures
-│   ├── Figure_3_Trajectories.m               # Trajectory comparison (Figs. 3 & 6)
-│   ├── Figure_4_Minimum_Distance.m           # Minimum safety distance (Figs. 4 & 7)
-│   ├── Figure_5_State_Error.m                # State error convergence (Figs. 5 & 8)
-│   ├── Figure_9_Computation_Time.m           # Computation time comparison (Fig. 9)
-│   ├── Figure_10_Statistical_Analysis.m      # Statistical box plots (Fig. 10)
-│   ├── Figure_11_Scalability_Centralized.m   # Scalability vs. centralized solver (Fig. 11)
-│   └── Figure_12_DMPC_Comparison.m           # Comparison with DMPC [15] (Fig. 12)
-│
-├── /Results_and_Tables/          # Numerical Results Corresponding to Paper Tables
-│   ├── Table_4_Inspection_Sequences.csv      # Inspection sequences & path lengths (Table 4)
-│   ├── Table_5_Inspection_Sequences_6UAV.csv # Sequences for 6-UAV scenario (Table 5)
-│   ├── Table_6_Statistical_Results.csv       # 30 random scenario statistics (Table 6)
-│   └── convergence_data.mat                  # Algorithm convergence history
-│
-├── /Parameters/                  # All Simulation Parameters
-│   ├── UAV_Parameters.mat                    # UAV physical parameters (Table 3 in paper)
-│   ├── DDG_Weights.m                         # Weight matrices Q_i, R_i, R_ij, F_i
-│   └── Simulation_Settings.m                 # Time horizon, step size, stopping criteria
-│
-├── README.md                     # This file
-└── LICENSE                       # MIT License
+- DDG_Algorithm（threeUAVs:results_3UAV-28Turbine_20251214_105152.m）
+   ── UAV_Dynamics.m            # Quadrotor dynamic model (Equations 1-5)
+   ── Cost_Function.m           # Individual UAV cost function (Equation 9)
+   ── Pontryagin_Solver.m       # Solver using Pontryagin's Minimum Principle (Eq. 20-21)
+   ── Gradient_Optimization.m   # Distributed gradient optimization (Algorithm 1)
 
+- GA_DZ （threeUAVs:results_3UAV-28Turbine_20251214_105152.m）                  # Genetic Algorithm with Dynamic Zoning [6]
+- NN_DRL（threeUAVs:results_3UAV-28Turbine_20251214_105152.m）                 # Neural Network Deep Reinforcement Learning [9]
+- Simulation_Data             # Minimal Dataset for Reproducibility
+   ── Scenario_1_3UAV_28Turbines(results_3UAV-28Turbine_20251214_105152.mat)   # Scenario 1: 3 UAVs, 28 Turbines
+   ── turbine_locations.csv     # Wind turbine coordinates (X, Y)
+   ── initial_conditions.mat    # UAV initial states (position, velocity)
+   ── assigned_tasks.json       # Pre-assigned inspection tasks per UAV
+   ── DDG_Results.mat           # Full DDG output (trajectories, errors, etc.)
+   ── GA_DZ_Results_Scenario1.mat
+   ── NN_DRL_Results_Scenario1.mat
+  
 
+-Scenario_2_6UAV_40Turbines(results_6UAV-40Turbine_20251214_105204.mat)   # Scenario 2: 6 UAVs, 40 Turbines
+   ── turbine_locations.csv     # Wind turbine coordinates (X, Y)
+   ── initial_conditions.mat    # UAV initial states (position, velocity)
+   ── assigned_tasks.json       # Pre-assigned inspection tasks per UAV
+   ── DDG_Results.mat           # Full DDG output (trajectories, errors, etc.)
+   ── GA_DZ_Results_Scenario1.mat
+   ── NN_DRL_Results_Scenario1.mat
 
+  ── /Scripts_Generate_Figures/    # Scripts to Reproduce All Paper Figures
+  ── threeUAVs:results_3UAV-28Turbine_20251214_105152.m               # Trajectory comparison (Fig. 3)
+  ── threeUAVs:results_3UAV-28Turbine_20251214_105152.m          # Minimum safety distance (Fig. 4)
+  ── threeUAVs:results_3UAV-28Turbine_20251214_105152.m                # State error convergence (Fig. 5)
+  ── sixUAVstradis.m           # Trajectory comparison (Fig. 6)
+  ── sixUAVstradis.m        # Minimum safety distance (Fig. 7)
+     ── sixUAVstradis.m        # State error convergence (Fig. 8)
+    ── computationtimetwoscle.m        # Computation time comparison (Fig. 9)
+    ── random.m        # 30 random scenarios with the three methods (Fig. 10)
+    ── discen.m          # The comparison of computation time (Fig. 11)
+   ──DDGDMPCtime.m          # DDGDMPC (Fig. 12)
+-DDG Parameters                  # All Simulation Parameters
+   ── final_parameters.mat                    # UAV physical parameters Weight matrices Q_i, R_i, R_ij, F_i Time horizon, step size, stopping criteria
 
-
-
-
-
-
-
-
-
-
-
-
-### 📚 Open-Source Components
+### Quick Start (Reproducing Main Results)
 We gratefully acknowledge these open-source contributions:
 
-#### 1. A* Algorithm Implementation
-<p align="left">
-  <img src="https://img.shields.io/badge/License-BSD--3--Clause-blue" alt="BSD-3-Clause">
-</p>
+#### 1.Prerequisites
+MATLAB (R2021a or later, primary environment)
+Required Toolboxes: Control System Toolbox, Optimization Toolbox
 
-- **Source**: [python-astar](https://github.com/jrialland/python-astar)
-- **Copyright**: © 2012-2021 Julien Rialland
+#### 2. Data Content:
 
-#### 2. DQN Implementation (PyTorch)
-<p align="left">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT">
-</p>
+Input Data: Wind turbine coordinates (simulated and anonymized), UAV initial states, and task allocations that serve as the starting point for all simulations.
 
-- **Source**: [Deep-RL-PyTorch](https://github.com/sweetice/Deep-reinforcement-learning-with-pytorch)
-- **Copyright**: © 2018 Johnny He
+Generated Results: Optimal trajectories (position, velocity), control inputs (u_i), state errors (z_tilde), safety metrics (min_distance), and all calculated performance indicators (completion time, path length, computation time).
 
-#### 3. Dijkstra Path Planning
-<p align="left">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT">
-</p>
-
-- **Source**: [Path-Planning-Simulator](https://github.com/sahibdhanjal/Path-Planning-Simulator)
-- **Copyright**: © 2017 Sahib Singh Dhanjal
-
-#### 4. Simulated Annealing Algorithm
-<p align="left">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT">
-</p>
-
-- **Source**: [scikit-opt](https://github.com/guofei9987/scikit-opt)
-- **Copyright**: © 2019 Fei Guo
-
-#### 5. K-Means
-<p align="left">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT">
-</p>
-
-- **Source**: [fast-pytorch-kmeans](https://github.com/DeMoriarty/fast_pytorch_kmeans)
-- **Copyright**: © 2018 Sehban Omer
+Benchmark Results: Output data from the GA-DZ and NN-DRL methods for direct comparison.
